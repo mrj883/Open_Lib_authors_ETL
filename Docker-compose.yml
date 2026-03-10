@@ -60,6 +60,8 @@ services:
       - kestra_data:/app/storage
       - /var/run/docker.sock:/var/run/docker.sock
       - kestra_tmp:/tmp/kestra-wd
+    env_file:
+      - .env
     environment:
       KESTRA_CONFIGURATION: |
         datasources:
@@ -69,9 +71,14 @@ services:
             username: kestra
             password: k3str4
         kestra:
+          ai:
+            type: gemini
+            gemini:
+              model-name: gemini-2.5-flash
+              api-key: ${GEMINI_API_KEY}
           server:
             basicAuth:
-              username: "admin@kestra.io" # it must be a valid email address
+              username: "mrj9893@gmail.com" # it must be a valid email address
               password: Admin1234!
           repository:
             type: postgres
@@ -91,4 +98,10 @@ services:
     depends_on:
       kestra_postgres:
         condition: service_started
-    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          memory: 1G

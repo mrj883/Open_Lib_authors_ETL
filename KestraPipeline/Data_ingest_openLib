@@ -1,0 +1,44 @@
+id: Open_lib_Kestra_ETL
+namespace: open_lib.ops
+inputs:
+  - id: select_records_type
+    type: SELECT
+    defaults: "Lists"
+    values: [ "wikidata", "covers_metadata", "other", "lists", "redirects", "ratings","authors" ]
+
+variables:
+  file: "{{inputs.select_records_type}}_records.tsv"
+  staging_table: "public.{{inputs.select_records_type}}_staging"
+  table: "public.{{inputs.select_records_type}}"
+
+tasks:
+  - id: set_lable
+    type: io.kestra.plugin.core.execution.Labels
+    labels:
+      file: "{{render(vars.file)}}"
+      type: "{{inputs.select_records_type}}"
+  - id: extract
+    type: io.kestra.plugin.scripts.shell.Commands
+    outputFiles:
+      - "*.tsv"
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    commands:
+      - wget -q0- https://openlibrary.org/data/ol_dump_{{inputs.select_records_type}}_latest.txt.gz | gunzip > {{vars.file}}
+
+    
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+

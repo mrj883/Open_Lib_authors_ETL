@@ -1,0 +1,24 @@
+id: ant_676518
+namespace: gcp_etl.ops
+
+tasks:
+  - id : key_val_set_project
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_PROJ_NAME
+    kvType: STRING
+    value: ny-taxi-data-488318
+  - id : key_val_set_loc
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_LOCATION
+    kvType: STRING
+    value: us-east1
+  - id: gcp_bucket_name
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_BUCKET_NAME
+    kvType: STRING
+    value: mukul-raj-ny-taxi-kestra-9121
+  - id: gcp_dataset
+    type: io.kestra.plugin.core.kv.Set
+    key: GCP_DATASET
+    kvType: STRING
+    value: ny_taxi
